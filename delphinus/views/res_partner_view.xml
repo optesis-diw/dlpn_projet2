@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_partner_form_inherit">
+            <field name="name">partner.form.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                 <field name="company_type" position="after">
+                    <label  for="is_mareyeur" string="Maréyeur"/>
+                    <field name="is_mareyeur"/>
+                </field>
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Liste des collecteurs">
+                        <field name="collecteur_line">
+                            <tree editable='bottom'>
+                                <field name='collecteur_id'/>
+                                <field name='name' invisible='1'/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Liste des lieux">
+                        <field name="lieu_ids">
+                            <tree editable='bottom'>
+                                <field name='lieu_id'/>
+                                <field name='name' invisible='1'/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

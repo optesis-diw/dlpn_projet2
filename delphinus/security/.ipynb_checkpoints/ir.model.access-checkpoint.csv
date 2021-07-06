@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_optesis_airport,optesis.airport,model_optesis_airport,base.group_user,1,1,1,1
+access_optesis_lieu,optesis.lieu,model_optesis_lieu,base.group_user,1,1,1,1
+access_optesis_lieu_line,optesis.lieu.line,model_optesis_lieu_line,base.group_user,1,1,1,1
+access_optesis_collecteur_line,optesis.collecteur.line,model_optesis_collecteur_line,base.group_user,1,1,1,1
+access_optesis_lta,optesis.lta,model_optesis_lta,base.group_user,1,1,1,1
+access_optesis_transit,optesis.transit,model_optesis_transit,base.group_user,1,1,1,1
+access_optesis_transformation,optesis.transformation,model_optesis_transformation,base.group_user,1,1,1,1
+access_optesis_calibre,optesis.calibre,model_optesis_calibre,base.group_user,1,1,1,1

@@ -1,0 +1,1981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- by ANG -->
+<odoo>
+   <template id="devis_delphinus" inherit_id="account.report_invoice_document">
+      <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+         <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+               <t t-call="delphinus.optesis_external_view">
+                  <div class="page" style="padding-top:37%">
+                     <style>
+                         p{
+                                     font-size:14px;
+                          }
+                      </style>
+                     <p/>
+                     <t t-set="total_colis" t-value="0" />
+                     <t t-set="val" t-value="0" />
+                     <t t-set="nb_line" t-value="0" />
+                     <t t-set="nb_line_1" t-value="0" />
+                     <t t-set="nb_line_2" t-value="0" />
+                     <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-set="nb_line_1" t-value="nb_line_1+1" />
+                          <t t-set="nb_line_2" t-value="nb_line_2+1" />
+                     </t>
+                     <div>
+                        <div id="total">
+                           <div>
+                              <table />
+                           </div>
+                        </div>
+                     </div>
+                      
+                     <t t-if="nb_line_1 &lt; 30 or nb_line_1 == 30">
+                        <div class="row" style="width:100%;">
+                           <div class="col-12" style="width:100%;padding-top:-15px">
+                           <table class="" style="border:1px solid;border-collapse:collapse;width:105%;">
+                                 <tr style="height:2px">
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Colis</p>
+                                    </th>
+                                    <th height="10" style="width:50%;border:1px solid;height:2px" class="text-center">
+                                       <p>Produit</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Poids</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>PU</p>
+                                    </th>
+                                    <th height="10" style="width:20%;border:1px solid;height:2px" class="text-center">
+                                       <p>Prix Total</p>
+                                    </th>
+                                 </tr>
+                                 <tr t-foreach="o.invoice_line_ids" t-as="line" height="5" style="height:2px">
+                                    <t t-set="total_colis" t-value="total_colis+line.nb_colis" />
+                                    <t t-set="nb_line" t-value="nb_line+1" />
+                                    <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                       <p style="margin:0;padding:0">
+                                          <span t-esc="'{0:,.0f}'.format(line.nb_colis).replace(',', ' ')" />
+                                       </p>
+                                    </td>
+                                    <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                       <p style="padding:0px;margin:0px">
+                                          <span t-field="line.name" style="margin-left:3px" />
+                                       </p>
+                                    </td>
+                                    <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                       <p style="margin:0;padding:0">
+                                          <span t-esc="'{0:,.2f}'.format(line.quantity).replace(',', ' ')"/>
+                                       </p>
+                                       <t t-if="line.name == 'fret Maritime'">
+                                          <t t-set="val" t-value="val" />
+                                       </t>
+                                       <t t-else="">
+                                          <t t-set="val" t-value="val+line.quantity" />
+                                       </t>
+                                    </td>
+                                    <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                       <p style="margin:0;padding:0">
+                                          <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_unit).replace(',', ' ')" />
+                                                 
+                                                    <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_unit).replace(',', ' ')" />
+                                                    <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_unit).replace(',', ' ')" />
+                                       </p>
+                                    </td>
+                                    <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                       <p style="margin:0;padding:0">
+                                         
+                                          <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                           <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                             <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                       </p>
+                                    </td>
+                                 </tr>
+                               <t t-if="nb_line_2 &lt;3">
+                                   
+                                   
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                  
+                                          <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                  
+                                   
+                               </t>
+                                
+                               
+                                 <t t-if=" nb_line_2 == 13 or nb_line_2 == 14 or nb_line_2 == 15 
+                                    or nb_line_2 == 15 or nb_line_2 == 16
+                                    or nb_line_2 == 17 or nb_line_2 == 18
+                                    or nb_line_2 == 19 or nb_line_2 == 20 
+                                    or nb_line_2 == 21 or nb_line_2 == 22 
+                                    or nb_line_2 == 23 or nb_line_2 == 23 
+                                    or nb_line_2 == 24 or nb_line_2 == 25" >  
+                                  
+                                  
+                                    
+                                  
+                        <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                         </tr>
+ </t>
+
+                               
+                               
+                               
+                                 <t t-if="nb_line_2 == 10 or nb_line_2 == 11 or nb_line_2 == 12">  
+                                  
+                                  
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                                                     <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   
+                               </t>
+
+                               
+                               <t t-if="nb_line_2 == 7 or nb_line_2== 8 or nb_line_2== 9">  
+                                  
+                                   
+                                   
+                                   
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   
+                               </t>
+                               
+                                 <t t-if="nb_line_2 == 4 or nb_line_2== 3 or nb_line_2== 5 or nb_line_2== 6 ">
+                                       
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                  
+                                  
+                                  
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                            
+                                        
+                                           <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                        <p style="margin:0;padding:0" >
+                                           
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                        <p style="padding:0px;margin:0px">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                         
+                                        </p>
+                                       
+                                     </td>
+                                     <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                        </p>
+                                     </td>
+                                     <td height="10" style="width:22%;border-right:1px solid;padding-right:20px" align="right">
+                                        <p style="margin:0;padding:0">
+                                          
+                                         
+                                        </p>
+                                     </td>
+                                        </tr>
+                                   
+                               </t>
+
+                                 <tr>
+                                    <td style="border-bottom:1px solid;border-right:1px solid;border-left:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid">
+                                       <p style="font-size:10px;margin-top:10px;width:100%;padding:0px,margin:0px;margin-left:4px">La Société DELPHINUS SARL IMPORT EXPORT enregistrée sous le numero SNREX0015ASX exportatrice des produits convertis par le présent document déclare que, sauf indication claire du contraire, ces produits ont l'origine préférentielle du Sénégal au sens des régles d'origine  du Système des Préférences Tarifaires Généralisées de l'Union Européenne et que le critère d'origine satisfait est P (Produits entièrement  obtenus)</p>
+                                    </td>
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                 </tr>
+                              </table>
+                             <table style="width:100%;">
+                                 <tr>
+                                    <td style="width:11%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;height:55px;vertical-align:middle;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.0f}'.format(total_colis).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                    <td style="width:53%;padding-left:3px;padding-top:-20px" align="left">
+                                        <p style="margin-top:-30px"><span><![CDATA[&nbsp;]]></span></p>
+                                       <p style="font-size:14px;margin-left:2px;height:50px;margin-right:5px;word-wrap: break-word">
+                                          <span />
+                                          Arrêtée la présente Facture
+                                            <span t-field="o.invoice_incoterm_id.code"/>
+                                          <span>à la somme de
+                                        :</span>
+                                         
+                                          <span t-field="o.num_word" />
+                                       
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                       </p>
+                                    </td>
+                                    <td style="width:10%" align="right">
+                                       <p style="border-radius:6px;border:1px solid;margin-left:-9px;height:50px;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.1f}'.format(val).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                   
+                                    <td style="width:10%" align="right">
+                                       <p style="" />
+                                    </td>
+                                    <td style="width:21%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;padding-top:15px;height:50px;margin-right:-41px;font-weight:bold">
+                                          <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(o.amount_total).replace(',', ' ')" />
+                                            <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(o.amount_total).replace(',', ' ')" />
+                                             <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(o.amount_total).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </div>
+                     </t>
+                     <t t-if="nb_line_1 &gt; 30">
+                        <t t-set="total_colis" t-value="0" />
+                        <t t-set="val" t-value="0" />
+                        <t t-set="nb_line" t-value="0" />
+                         <t t-set="nb_line_1" t-value="0" />
+                        <t t-set="sous_totaux" t-value="0" />
+                        <div class="row" style="width:100%;">
+                           <div class="col-12" style="width:100%;padding-top:-10px">
+                              <table class="" style="border:1px solid;border-collapse:collapse;width:105%;">
+                                 <tr style="height:2px">
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Colis</p>
+                                    </th>
+                                    <th height="10" style="width:50%;border:1px solid;height:2px" class="text-center">
+                                       <p>Produit</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Poids</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>PU</p>
+                                    </th>
+                                    <th height="10" style="width:20%;border:1px solid;height:2px" class="text-center">
+                                       <p>Prix Total</p>
+                                    </th>
+                                 </tr>
+                                 <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <t t-set="nb_line" t-value="nb_line+1" />
+                                    <t t-if="nb_line &lt;30 or nb_line == 30">
+                                        <t t-set="nb_line_1" t-value="nb_line_1+1" />
+                                       <t t-set="total_colis" t-value="total_colis+line.nb_colis" />
+                                       <tr style="">
+                                          <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                             <p style="margin:0;padding:0">
+                                                <span t-esc="'{0:,.0f}'.format(line.nb_colis).replace(',', ' ')" />
+                                             </p>
+                                          </td>
+                                          <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                             <p style="padding:0px;margin:0px">
+                                                <span t-field="line.name" style="margin-left:3px" />
+                                             </p>
+                                          </td>
+                                          <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                             <p style="margin:0;padding:0">
+                                                <span t-esc="'{0:,.2f}'.format(line.quantity).replace(',', ' ')" />
+                                             </p>
+                                             <t t-if="line.name == 'fret Maritime'">
+                                                <t t-set="val" t-value="val" />
+                                             </t>
+                                             <t t-else="">
+                                                <t t-set="val" t-value="val+line.quantity" />
+                                             </t>
+                                          </td>
+                                          <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                             <p style="margin:0;padding:0">
+                                                 
+                                                <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_unit).replace(',', ' ')" />
+                                                 
+                                                    <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_unit).replace(',', ' ')" />
+                                                    <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_unit).replace(',', ' ')" />
+                                             </p>
+                                              
+                                          </td>
+                                          <td height="10" style="width:20%;border-right:1px solid;padding-right:20px" align="right">
+                                             <p style="margin:0;padding:0">
+                                                <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                           <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                                   <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                                 
+                                                <t t-set="sous_totaux" t-value="sous_totaux+line.price_subtotal" />
+                                             </p>
+                                          </td>
+                                       </tr>
+                                    </t>
+                                 </t>
+                                 <t t-if="nb_line &gt;30">
+                                    <tr>
+                                       <td style="border-bottom:1px solid;border-right:1px solid;border-left:1px solid;" />
+                                       <td style="border-bottom:1px solid;border-right:1px solid">
+                                          <p style="font-size:10px;margin-top:10px;width:100%;padding:0px,margin:0px;margin-left:4px">La Société DELPHINUS SARL IMPORT EXPORT enregistrée sous le numero SNREX0015ASX exportatrice des produits convertis par le présent document déclare que, sauf indication claire du contraire, ces produits ont l'origine préférentielle du Sénégal au sens des régles d'origine  du Système des Préférences Tarifaires Généralisées de l'Union Européenne et que le critère d'origine satisfait est P (Produits entièrement  obtenus)</p>
+                                       </td>
+                                       <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                       <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                       <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                    </tr>
+                                 </t>
+                              </table>
+                         <table style="width:100%;">
+                                 <tr>
+                                    <td style="width:11%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;height:55px;vertical-align:middle;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.0f}'.format(total_colis).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                   <td style="width:53%;padding-left:3px;padding-top:-20px" align="left">
+                                        <p style="margin-top:-30px"><span><![CDATA[&nbsp;]]></span></p>
+                                       <p style="font-size:14px;margin-left:2px;height:50px;margin-right:5px;word-wrap: break-word">
+                                          <span />
+                                          Arrêtée la présente Facture
+                                               <span t-field="o.invoice_incoterm_id.code"/>
+                                          <span>à la somme de
+                                        :</span>
+                                         
+                                          <span t-field="o.num_word" />
+                                      
+
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                       </p>
+                                    </td>
+                                    <td style="width:10%" align="right">
+                                       <p style="border-radius:6px;border:1px solid;margin-left:-9px;height:50px;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.1f}'.format(val).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                    <td style="width:10%" align="right">
+                                       <p style="" />
+                                    </td>
+                                    <td style="width:21%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;padding-top:15px;height:50px;margin-right:-41px;font-weight:bold">
+                                           <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(sous_totaux).replace(',', ' ')" />
+                                            <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(sous_totaux).replace(',', ' ')" />
+                                            <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.0f}'.format(sous_totaux).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </div>
+                         
+                         <t t-if="nb_line_1 &lt; nb_line or nb_line_1 == nb_line">
+                             <t t-set="nb_line_1" t-value="0"/>
+                        <div class="">
+                           <p style="page-break-before:always;" />
+                        </div>
+                        <div class="row" style="width:100%;padding-top:345px">
+                           <div class="col-12" style="width:100%;padding-top:-10px">
+                              <table class="" style="border:1px solid;border-collapse:collapse;width:105%;">
+                                 <tr style="height:2px">
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Colis</p>
+                                    </th>
+                                    <th height="10" style="width:50%;border:1px solid;height:2px" class="text-center">
+                                       <p>Produit</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>Poids</p>
+                                    </th>
+                                    <th height="10" style="width:10%;border:1px solid;height:2px" class="text-center">
+                                       <p>PU</p>
+                                    </th>
+                                    <th height="10" style="width:20%;border:1px solid;height:2px" class="text-center">
+                                       <p>Prix Total</p>
+                                    </th>
+                                 </tr>
+                                 <t t-if="nb_line &gt;30">
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                         <t t-set="nb_line_1" t-value="nb_line_1+1" />
+                                       <t t-if="nb_line_1 &gt;30">
+                                             
+                                          <t t-set="total_colis" t-value="total_colis+line.nb_colis" />
+                                          <tr style="">
+                                             <td height="10" style="width:10%;border-right:1px solid;padding-right:3px;border-left:1px solid;" align="right">
+                                                <p style="margin:0;padding:0">
+                                                   <span t-esc="'{0:,.0f}'.format(line.nb_colis).replace(',', ' ')" />
+                                                </p>
+                                             </td>
+                                             <td height="10" style="width:50%;border-right:1px solid;padding-left:4px" align="left">
+                                                <p style="padding:0px;margin:0px">
+                                                   <span t-field="line.name" style="margin-left:3px" />
+                                                </p>
+                                             </td>
+                                             <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                                <p style="margin:0;padding:0">
+                                                   <span t-esc="'{0:,.2f}'.format(line.quantity).replace(',', ' ')" />
+                                                </p>
+                                                <t t-if="line.name == 'fret Maritime'">
+                                                   <t t-set="val" t-value="val" />
+                                                </t>
+                                                <t t-else="">
+                                                   <t t-set="val" t-value="val+line.quantity" />
+                                                </t>
+                                             </td>
+                                             <td height="10" style="width:10%;border-right:1px solid;padding-right:3px" align="right">
+                                                <p style="margin:0;padding:0">
+                                                    <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_unit).replace(',', ' ')" />
+                                                 
+                                                    <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_unit).replace(',', ' ')" />
+                                                    <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_unit).replace(',', ' ')" />
+                                                </p>
+                                             </td>
+                                             <td height="10" style="width:20%;border-right:1px solid;padding-right:20px" align="right">
+                                                <p style="margin:0;padding:0">
+                                                   <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                           <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                                      <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.1f}'.format(line.price_subtotal).replace(',', ' ')" />
+                                                   <t t-set="sous_totaux" t-value="sous_totaux+line.price_subtotal" />
+                                                </p>
+                                             </td>
+                                          </tr>
+                                       </t>
+                                    </t>
+                                 </t>
+                                 <tr>
+                                    <td style="border-bottom:1px solid;border-right:1px solid;border-left:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid">
+                                       <p style="font-size:10px;margin-top:10px;width:100%;padding:0px,margin:0px;margin-left:4px">La Société DELPHINUS SARL IMPORT EXPORT enregistrée sous le numero SNREX0015ASX exportatrice des produits convertis par le présent document déclare que, sauf indication claire du contraire, ces produits ont l'origine préférentielle du Sénégal au sens des régles d'origine  du Système des Préférences Tarifaires Généralisées de l'Union Européenne et que le critère d'origine satisfait est P (Produits entièrement  obtenus)</p>
+                                    </td>
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                    <td style="border-bottom:1px solid;border-right:1px solid;" />
+                                 </tr>
+                              </table>                <table style="width:100%;">
+                                 <tr>
+                                    <td style="width:11%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;height:55px;vertical-align:middle;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.0f}'.format(total_colis).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                    <td style="width:53%;padding-left:3px;padding-top:-20px" align="left">
+                                        <p style="margin-top:-30px"><span><![CDATA[&nbsp;]]></span></p>
+                                       <p style="font-size:14px;margin-left:2px;height:50px;margin-right:5px;word-wrap: break-word">
+                                          <span />
+                                          Arrêtée la présente Facture
+                                         <span t-field="o.invoice_incoterm_id.code"/>
+                                          <span>à la somme de
+                                        :</span>
+                                         
+                                          <span t-field="o.num_word" />
+                                          <span t-field="o.invoice_incoterm_id.code"/>
+
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                       </p>
+                                    </td>
+                                    <td style="width:10%" align="right">
+                                       <p style="border-radius:6px;border:1px solid;margin-left:-9px;height:50px;padding-top:15px;font-weight:bold">
+                                          <span t-esc="'{0:,.1f}'.format(val).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                    <td style="width:10%" align="right">
+                                       <p style="" />
+                                    </td>
+                                    <td style="width:21%;" align="right">
+                                       <p style="border-radius:6px;border:1px solid;padding-top:15px;height:50px;margin-right:-41px;font-weight:bold">
+                                          <span t-if="o.currency_id.name == 'XOF'" t-esc="'{0:,.0f}'.format(sous_totaux).replace(',', ' ')" />
+                                            <span t-if="o.currency_id.name == 'EUR'" t-esc="'{0:,.3f}'.format(sous_totaux).replace(',', ' ')" />
+                                            <span t-if="o.currency_id.name == 'USD'" t-esc="'{0:,.0f}'.format(sous_totaux).replace(',', ' ')" />
+                                          <span><![CDATA[&nbsp;]]></span>
+                                          <span t-if="o.currency_id.name == 'XOF'">FCFA</span>
+                                          <span t-if="o.currency_id.name == 'EUR'">Euros</span>
+                                          <span t-if="o.currency_id.name == 'USD'">Dollars</span>
+                                          <span><![CDATA[&nbsp;]]></span>
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </div>
+                     </t> 
+                         
+                     </t>
+                    
+                     <p t-if="o.narration" name="comment" style="margin-top:10px;font-size:10px;font-weight:bold">
+                        <span t-field="o.narration" />
+                     </p>
+                      
+                      
+                      
+                      
+                      
+                      
+                  </div>
+               </t>
+            </t>
+         </t>
+      </xpath>
+   </template>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <!-- Bon de pesée delphinus -->
+        <report
+            id="optesis_delphinus_bon"
+            model="purchase.order"
+            string="Bon de Pesée"
+            report_type="qweb-pdf"
+            name="delphinus.bon_delphinus_id"
+            file="delphinus.bon_delphinus"
+            paperformat="delphinus.paperformat_devis_delphinus"
+            />
+          <report
+            id="optesis_delphinus_bon1"
+            model="purchase.order"
+            string="Bon d'achat 1"
+            report_type="qweb-pdf"
+            name="delphinus.bon_delphinus_id_1"
+            file="delphinus.bon_delphinus_1"
+            paperformat="delphinus.paperformat_devis_delphinus"
+            />
+    </data>
+</odoo>

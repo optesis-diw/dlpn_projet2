@@ -1,0 +1,36 @@
+{
+    'name': 'Delphinus',
+    'author': 'Optesis SA',
+    'version': '1.4.0',
+    'category': 'Tools',
+    'description': """
+    permet de faire une descripotion ...
+""",
+    'summary': 'Module de ...',
+    'sequence': 9,
+    'depends': ['base', 'account', 'account_accountant', 'purchase','sale','jt_amount_in_words'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/account_move_view.xml',
+        #'views/optesis_pivot.xml',
+        'views/purchase_order_view.xml',
+        'views/sale_order_view.xml',
+        'views/res_partner_view.xml',
+        'views/optesis_header_footer.xml',
+        'views/optesis_external_layout.xml',
+        'views/optesis_report_delphinus.xml',
+        'views/header_footer.xml',
+        'views/external_view.xml',
+        'views/optesis_report_delphinus.xml',
+        'views/bon_delphinus_1.xml',
+        'views/bon_delphinus.xml',
+        'report/report.xml',
+        'report/optesis_custom_format.xml',
+        'report/optesis_custom_format_facture.xml',
+        
+    ],
+    'test': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

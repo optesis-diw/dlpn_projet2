@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="optesis_external_header_footer">
+             <t t-foreach="docs" t-as="o">
+           <div class="header">
+              <div class="row">
+                   <div class="col-8">
+                      <table style="width:30%">
+                          <tr>
+                              <td align="left" height="120px" style="width:15%;padding:3px" rowspan="2">
+                              <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="width:100%;height:auto" alt="Logo"/>
+
+                              </td>
+                           
+                          </tr>
+                  
+                      </table>
+                       
+                  </div>
+                
+                  
+                  
+                  
+           
+          </div>
+               <div class="row" style="margin-top:-20px" align="left">
+                 <p style="font-size:12px;margin:0px;padding:0px;margin-top:-10px;margin-left:20px" class="text-left">
+                                  SARL au capital de 150.000.000 FCFA <br/>
+                                    NINEA 03380892G2 - RC DKR 1999 B 538
+                                      <br/>
+                                      Route de Thiès - Parcelle n°1 - Diamniadio -Région de Dakar(Sénégal)
+                                      <br/>
+                                      B.P 50659 - Tél(221) 33 836 53 32 - Fax(221) 33 836 48 50 - Email:delphi@arc.sn
+                                  </p>
+                   <p align="right" style="margin-top:32px;margin-left:245px">Dakar, le 
+                       <span t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                   </p>
+                 
+               </div>
+               
+                              
+                    <div id="" class="row" style="">
+                                <div class="col-6" style="padding-top:-30px;margin-top:-45px;padding-top:-50px">
+                                    <p style="margin-top:80px;font-size:20px;color:white;padding-top:-30px">hoo</p>
+                                    <p style="margin:0px;padding:0px;font-size:18px;margin-top:32px">
+                                        <span>
+                                            <span>Agrément : </span>
+                                        <span t-field="o.agrement"/>
+                                        </span>
+                                    </p>
+                                   
+                                     <p style="margin:0px;padding:0px;font-size:18px;padding-top:5px;font-weight:bold;font-size:16px">
+                                      <span t-field="o.name"></span>
+                                    </p>
+                                      <p style="margin:0px;padding:0px;font-size:18px;">
+                                        <span t-field="o.invoice_sequence_number_next_prefix"/>
+                                    </p>
+                                    <t t-if="o.agrement == '001'">
+                                         <p style="margin:0px;padding:0px;font-size:18px;">
+                                        L.T.A : <span t-field="o.lta"></span>
+                                     </p>
+                                          <p style="margin:0px;padding:0px;font-size:18px;">
+                                            Aéroport : <span t-field="o.airport"></span>
+                                         </p>
+                                     
+                                    
+                                    </t>
+                                      <t t-if="o.agrement == '0003'">
+                                    <p style="margin:0px;padding:0px;font-size:18px;">
+                                        B.L : <span t-field="o.lta"></span>
+                                    </p>
+                                     <p style="margin:0px;padding:0px;font-size:18px;">
+                                        Port: <span t-field="o.airport"></span>
+                                    </p>
+                                     
+                                     
+                                    </t>
+                                       <p style="margin:0px;padding:0px;font-size:18px" align="left">Transitaire :
+                                         <span t-field="o.transit"></span></p>
+                                 <p style="margin:0px;padding:0px;font-size:18px;margin-top:-2px">
+                                        <span>
+                                            <span>Zone Fao n°34</span>
+                                       
+                                        </span>
+                                    </p>
+                                </div>
+                                 
+                                 <div class="col-6 text-center" style="margin:0px;padding:0px;border:1px solid;margin-top:30px;border-radius:10px;padding-left:-70px">
+                                     <strong>
+                                     <p>DOIT :</p>
+                                    
+                                     <p style="margin:0px;padding:0px"><span t-field="o.partner_id"></span></p>
+                                       <p style="margin:0px;padding:0px">
+                                           <span t-field="o.partner_id.street"/>
+                                            <span t-field="o.partner_id.country_id"/>
+                                          </p>
+                                    
+                                  
+                                     </strong>
+                                </div>
+                            </div>
+               
+            </div>
+
+
+          <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+              <t t-call="web.address_layout"/>
+              <t t-raw="0"/>
+          </div>
+
+          <div class="footer" style="padding-top:10x;">
+               
+               
+                         <t t-if="o.agrement == '0003'">
+                                     <p style="margin:0px;padding:0px;margin-left:3px;margin-top:5px" class="text-left">
+                                            Paiement comptant à l'embarquement
+                                    </p>
+                                    
+                                     
+                        </t>
+                        
+                           <t t-if="o.agrement == '001'">
+                                     <p style="margin:0px;padding:0px;margin-left:3px;margin-top:5px" class="text-left">
+                                           Paiement comptant à réception marchandise
+                                    </p>
+                                    
+                                     
+                        </t>
+              
+              
+              
+            
+                        
+
+               
+                    <strong>
+              
+                       
+             
+                            
+                            </strong>
+                            <div class="text-center" style="border:1px solid;padding:4px;height:20px;height:27px;margin-top:10px;margin-bottom:7px">
+                                Transport :
+                                <t t-if="o.agrement == '001'">Aerien</t>
+                                 <t t-if="o.agrement == '0003'">maritime</t>
+                                - Total Colis = <span t-esc="total_colis"></span> - Total Boîtes = 
+                                <span t-esc="'{0:,.0f}'.format(total_colis).replace(',', ' ')"/>
+                               
+                            </div>
+                     
+                      <div class=" align-middle text-left" style="border-top:1px solid;padding:0px;margin:0px;font-size:12px">
+                          <p style="margin:0px;padding:0px">
+                     Orabank : Compte n°042912900201 38 - Rue Carnot X Avenue Jeanfaures Dakar
+
+</p>
+                                <p style="margin:0px;padding:0px">
+                   (Sénégal) - Tél. 33 849 86 00 - Fax. 33 822 00 87
+
+</p>
+                              <p style="margin:0px;padding:0px">
+                 S.G.B.S. - ZI. : Compte n° 005000817665 17 - km 4,5 BCVD - B.P. 323 Dakar (Sénégal) -
+
+</p>
+                             <p style="margin:0px;padding:0px">
+                 Tél. 33 839 55 00 - Fax. 33 832 48 50
+
+</p>
+                                  <p style="margin:0px;padding:0px">
+            BOA - Agence Z.I. : Compte n° 02542790005 15 - km 3,5 BCCD - B.P. 1992 RP Dakar - Tél.
+
+</p>
+                                 <p style="margin:0px;padding:0px">
+                  33 859 12 80 - Fax. 33 832 50 99
+
+</p>
+                          
+                        
+                      </div>
+                       <div class="col-12 text-right" name="company_address" style="padding-left:5px;padding-top:12px" t-if="report_type == 'pdf'">
+
+                    
+                          <span class="page"/>
+                          /
+                          <span class="topage"/>
+                      </div>
+           
+
+
+
+                  
+            
+          </div>
+            </t>
+        </template>
+    </data>
+</odoo>
